@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Data records go here -->
+<record id="stud_room_form_view_id" model="ir.ui.view">
+<field name="name">stud.room.form.view.id</field>
+<field name="model">stud.room</field>
+    <field name="arch" type="xml">
+        <form string="student">
+        <header>
+        <field name="status" widget="statusbar"/>
+        <button name="status_draft" type= "object" string="draft" class="oe_highlight" attrs="{'invisibel':[('status','!=','draft')]}" />
+        </header>
+            <sheet>
+                <field name="image" widget="image" style="hight:100px;width:100px"/>
+                <group>
+                    <group>
+                        <field name="customer" options="{'no_open':true,'no_create':true}"/>
+                        <field name="Template"/>
+                        <field name="rate" widget="priority"/>
+                    </group>
+                    <group>
+                        <field name="expiration" onchange="1"/>
+                        <field name="date"/>
+                        <field name="Payment"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string='techers'>
+                        <field name='teach_room_ids'>
+                            <tree string='teacher' editable="bottom" widget="section_and_note_one2many" >
+                            <control>
+                                <create string="add a line"/>
+                                <create string="add a section" context="{'defualt_display_type':'line_section'}"/>
+                                <create string="add a note" context="{'defualt_display_type':'line_note'}"/>
+
+                            </control>
+                                <field name='product_id'/>
+                                <field name="description" widget="section_and_note_text" onchange='1'/>
+                                <field name="quantity"/>
+                                <field name="price"/>
+                                <field name="taxes" widget="many2many_tags"/>
+                                <field name="subtotal"/>
+                            </tree>
+                            <form string='teacher'>
+                            <group>
+                                <field name='product_id'/>
+                                <field name="description"/>
+                                <field name="quantity"/>
+                                <field name="price"/>
+                                <field name="taxes" />
+                                <field name="subtotal"/>
+                                </group>
+                                
+                            </form>
+                        </field>
+                    </page>
+                </notebook>
+                <div style='float:right'>
+                    <field name="untaxed"/>
+                    <field name="retail_price"/>
+                    <field name="total_salary"/>
+                </div>
+            </sheet>
+            <!-- <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div> -->
+        </form>
+    </field>
+</record>
+
+
+<record id="stud_room_tree_view_id" model="ir.ui.view">
+    <field name="name">stud.room.tree.view.id</field>
+    <field name="model">stud.room</field>
+    <field name="arch" type="xml">
+        <tree string="stund view">
+            <field name="sequence" widget="handle"/>
+            <field name="creation" />
+            <field name="customer" />
+            <field name="Sales"/>
+            <field name="company"/>
+            <field name="total_salary"/>
+            <field name="status" />
+            
+
+        </tree>
+    </field>
+</record>
+
+
+
+    <record id="stud_room_kanban_view_id" model="ir.ui.view">
+        <field name="name">stud.room.form.kanban</field>
+        <field name="model">stud.room</field>
+        <field name="arch" type="xml">
+            <kanban string="Kanban View" class="o_res_partner_kanban">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div>
+                                <field name="customer"/>
+                                <field name="status"/>
+                                <field name="total_salary"/>
+
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+<record id="stud_room_action_id" model="ir.actions.act_window">
+<field name="name">all record</field>
+<field name="res_model">stud.room</field>
+<field name="view_mode">tree,form,kanban</field>
+<field name="help" type="html">
+        <p class="0_view_nocontent_empty_folder">
+        there is no record
+        </p>
+    </field>
+    <field name="context">{'search_default_status':1}</field>
+</record>
+
+
+
+
+
+<menuitem name="Class" id="stud_main_menu" />
+<menuitem name="Room" id="stud_room_submenu" 
+parent="class_room.stud_main_menu" action="class_room.stud_room_action_id"/>
+
+
+</odoo>
